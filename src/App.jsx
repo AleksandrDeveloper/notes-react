@@ -1,37 +1,23 @@
-import React, { useCallback, useState } from "react";
-import "./App.css";
-import ItemsList from "./ItemsList";
+import React from "react";
+import { Route, Switch } from "react-router-dom";
+import "./App.scss";
+import Alert from "./components/Alert";
+import NavBar from "./components/NavBar";
+import About from "./pages/About";
+import Home from "./pages/Home";
 
 function App() {
-  const [colored, setColored] = useState(false);
-  const [count, setCount] = useState(1);
-
-  const genereteItemsFromApi = useCallback(()=>{
-    return new Array(count).fill('').map((_,i)=>`Element ${i+1}`)
-  },[count])
-
   return (
-    <div className="App">
-      <h1 style={{ color: colored ? "red" : "#000" }}>
-        Количество элементов: {count}
-      </h1>
-      <button
-        onClick={() => {
-          setCount((prev) => prev + 1);
-        }}
-      >
-        Add
-      </button>
-      <button
-        onClick={() => {
-          setColored((prev) => !prev); 
-        }}
-      >
-        Change
-      </button>
-
-      <ItemsList getItems={genereteItemsFromApi} />
-    </div>
+    <React.Fragment>
+      <NavBar />
+      <div className="container pt-5">
+        <Alert text={'Это уведомление-предупреждение'} type={'warning'} />
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/about" component={About} />
+        </Switch>
+      </div>
+    </React.Fragment>
   );
 }
 
