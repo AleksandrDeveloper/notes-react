@@ -1,9 +1,23 @@
-import React from 'react';
+import React, { useContext } from "react";
+import AlertContext from "../context/alert/AlertContext";
 
-export default function Alert({text,type}) {
+export default function Alert() {
+  const { alert, hide } = useContext(AlertContext);
+  if(!alert.visible){
+    return null
+  }
+  
   return (
-    <div className={`alert alert-${type}`} role='alert'>
-      {text}
+    <div className={`alert alert-${alert.type}`} role="alert">
+      {alert.text}
+      <button
+        type="button"
+        className="close"
+        onClick={hide}
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   );
 }
+ 
